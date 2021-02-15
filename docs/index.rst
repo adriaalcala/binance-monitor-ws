@@ -1,4 +1,4 @@
-The Activity Launcher Project
+The Binance Monitor Project
 ==============================
 
 .. toctree::
@@ -7,9 +7,3 @@ The Activity Launcher Project
 
    reference
    changelog
-
-.. automodule:: main
-   :members:
-
-.. automodule:: logger
-   :members:

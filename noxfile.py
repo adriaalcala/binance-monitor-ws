@@ -6,7 +6,7 @@ from nox.sessions import Session
 
 
 package = "keywords_data_source"
-locations = "main.py", "logger.py", "tests", "noxfile.py", "docs/conf.py"
+locations = "main.py", "binance_monitor", "logger.py", "tests", "noxfile.py", "docs/conf.py"
 
 
 @nox.session(python="3.8")
@@ -37,7 +37,7 @@ def mypy(session: Session) -> None:
 @nox.session(python="3.8")
 def tests(session: Session) -> None:
     """Run the test suite."""
-    args = session.posargs or ["--cov", "."]
+    args = session.posargs or ["--cov", "binance_monitor"]
     session.run("pytest", *args, external=True)
 
 

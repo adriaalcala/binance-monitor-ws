@@ -4,8 +4,8 @@ from unittest.mock import Mock, patch
 
 from pytest import raises
 
+from binance_monitor.consumer import monitor_symbol
 from config import SLEEP_TIME
-from main import monitor_symbol
 
 
 class SleepException(Exception):
@@ -13,10 +13,10 @@ class SleepException(Exception):
     pass
 
 
-@patch("main.create_connection")
-@patch("main.logger")
-@patch("main.sleep")
-def test_main(mock_sleep: Mock, mock_logger: Mock, mock_create_connection: Mock) -> None:
+@patch("binance_monitor.consumer.create_connection")
+@patch("binance_monitor.consumer.process_data")
+@patch("binance_monitor.consumer.sleep")
+def test_main(mock_sleep: Mock, mock_pipeline: Mock, mock_create_connection: Mock) -> None:
     """Test main."""
     def _sleep_side_effect(time: int) -> None:
         raise SleepException
@@ -32,4 +32,4 @@ def test_main(mock_sleep: Mock, mock_logger: Mock, mock_create_connection: Mock)
     with raises(SleepException):
         monitor_symbol("BTCUSDT", 2)
     mock_sleep.assert_called_with(SLEEP_TIME)
-    mock_logger.log_symbol.assert_called_once_with(response)
+    mock_pipeline.assert_called_once_with("BTCUSDT", 2, json.dumps(response))
